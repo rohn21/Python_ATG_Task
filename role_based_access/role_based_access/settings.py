@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
 ]
 
+AUTH_USER_MODEL = 'usr_role.BaseUser'
+
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"

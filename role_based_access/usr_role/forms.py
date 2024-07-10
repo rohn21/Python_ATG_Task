@@ -75,3 +75,7 @@ class DoctorSignUpForm(UserCreationForm):
             doctor = Doctor.objects.create(user=user, doctor_profile=doctor_profile)
             doctor.save()
         return user
+    
+class LoginForm(AuthenticationForm):
+    # email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput)
