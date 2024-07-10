@@ -9,7 +9,7 @@ from usr_role.forms import UserCreationForm, DoctorSignUpForm, PatientSignUpForm
 
 class DoctorRegisteration(CreateView):
     model = Doctor
-    form_class = DoctorSignUpForm
+    form_class = DoctorSignUpForm()
     template_name = 'user_role/doctor_register.html'
     success_url = reverse_lazy('usr_role:success')
     success_message = 'Congratulation, Registration successful | Please login to continue !!!!'
