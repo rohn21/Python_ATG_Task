@@ -48,10 +48,10 @@ class BaseUser(User):
     is_patient = models.BooleanField(default=False)
     address = models.TextField(max_length=200)
 
-class Patient(models.Model):
-    user = models.OneToOneField(BaseUser, on_delete = models.CASCADE, primary_key = True)
-    patient_profile = models.ImageField(upload_to='profiles/', blank=True)
-
 class Doctor(models.Model):
     user = models.OneToOneField(BaseUser, on_delete = models.CASCADE, primary_key = True)
     doctor_profile = models.ImageField(upload_to='profiles/', blank=True)
+
+class Patient(models.Model):
+    user = models.OneToOneField(BaseUser, on_delete = models.CASCADE, primary_key = True)
+    patient_profile = models.ImageField(upload_to='profiles/', blank=True)

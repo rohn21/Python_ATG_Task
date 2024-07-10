@@ -40,7 +40,7 @@ class PatientSignUpForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = BaseUser
-        fields = ("first_name", "last_name", "email", "username", "password1", "password2", "address")
+        fields = ("patient_profile", "first_name", "last_name", "email", "username", "password1", "password2", "address")
     
     # @transaction.atomic
     def save(self):
@@ -48,9 +48,11 @@ class PatientSignUpForm(UserCreationForm):
         user.is_patient = True
         user.username = self.cleaned_data.get('username')
         user.save()
-        patient = Patient.objects.create(user=user)
-        # patient.school_name=self.cleaned_data.get('school_name')
-        patient.save()
+
+        patient_profile = self.cleaned_data['patient_profile']
+        if patient_profile:
+            patient = Patient.objects.create(user=user, patient_profile=patient_profile)
+            patient.save()
         return user
 
 class DoctorSignUpForm(UserCreationForm):
@@ -58,7 +60,7 @@ class DoctorSignUpForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = BaseUser
-        fields = ("doctor_profile", "first_name", "last_name", "email", "username", "password1", "password2")
+        fields = ("doctor_profile", "first_name", "last_name", "email", "username", "password1", "password2", "address")
 
     # @transaction.atomic
     def save(self):
@@ -67,7 +69,9 @@ class DoctorSignUpForm(UserCreationForm):
         user.is_staff = True
         user.username = self.cleaned_data.get('username')
         user.save()
-        doctor = Doctor.objects.create(user=user)
-        # doctor.subject_name=self.cleaned_data.get('subject_name')
-        doctor.save()
+
+        doctor_profile = self.cleaned_data['doctor_profile']
+        if doctor_profile:
+            doctor = Doctor.objects.create(user=user, doctor_profile=doctor_profile)
+            doctor.save()
         return user
