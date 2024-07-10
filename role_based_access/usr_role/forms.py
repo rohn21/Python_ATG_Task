@@ -2,39 +2,6 @@ from django import forms
 from usr_role.models import BaseUser, Doctor, Patient
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-# class UserCreationForm(forms.Modelform):
-#     class Meta:
-#         model = BaseUser
-#         fields = "__all__"
-
-# class DoctorRegistrationForm(UserCreationForm):
-#     user_profile = UserCreationForm()
-
-#     def save(self, commit=True):
-#         user = super().save(commit=False)
-#         user_profile = self.cleaned_data['user_profile']
-#         if commit:
-#             user.save()
-#             user_profile.save(commit=False)
-#             user_profile.instance.user = user
-#             user_profile.save()
-#         return user
-
-# class PatientRegistrationForm(UserCreationForm):
-#     user_profile = UserCreationForm()
-
-#     def save(self, commit=True):
-#         user = super().save(commit=False)
-#         user_profile = self.cleaned_data['user_profile']
-#         if commit:
-#             user.save()
-#             user_profile.save(commit=False)
-#             user_profile.instance.user = user
-#             user_profile.save()
-#         return user  
-        
-
-
 class PatientSignUpForm(UserCreationForm):
     patient_profile = forms.ImageField()
 
@@ -42,7 +9,6 @@ class PatientSignUpForm(UserCreationForm):
         model = BaseUser
         fields = ("patient_profile", "first_name", "last_name", "email", "username", "password1", "password2", "address")
     
-    # @transaction.atomic
     def save(self):
         user = super().save(commit=False)
         user.is_patient = True
@@ -62,7 +28,6 @@ class DoctorSignUpForm(UserCreationForm):
         model = BaseUser
         fields = ("doctor_profile", "first_name", "last_name", "email", "username", "password1", "password2", "address")
 
-    # @transaction.atomic
     def save(self):
         user = super().save(commit=False)
         user.is_doctor = True
@@ -77,5 +42,4 @@ class DoctorSignUpForm(UserCreationForm):
         return user
     
 class LoginForm(AuthenticationForm):
-    # email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
