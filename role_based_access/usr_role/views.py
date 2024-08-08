@@ -47,10 +47,9 @@ class DoctorRegisteration(CreateView):
 
     # for directly redirect to userpage after user_registration
     def form_valid(self, form):
-        form.save()
         user = form.save()
         login(self.request, user)
-        return redirect('usrs:doctor')
+        return redirect('usr_role:doctor')
 
 class PatientRegisteration(CreateView):
     model = Patient
@@ -61,10 +60,9 @@ class PatientRegisteration(CreateView):
     
     # for directly redirect to userpage after user_registration
     # def form_valid(self, form):
-    #     form.save()
     #     user = form.save()
     #     login(self.request, user)
-    #     return redirect('usrs:patient')
+    #     return redirect('usr_role:patient')
 
 class PatientDashboardView(TemplateView):
     template_name = 'user_role/patient_dashboard.html'
@@ -94,6 +92,7 @@ class DoctorDashboardView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['profile_image'] = self.request.user.doctor.doctor_profile.url
+        return context
 
 class LogoutView(RedirectView):
     def get(self, request):
